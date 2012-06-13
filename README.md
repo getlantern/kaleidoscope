@@ -16,6 +16,10 @@ technical details, motivation and threat model of the protocol.  Information
 is included in this package for completeness, but should not be considered
 authoritative.
 
+Status
+======
+
+This library is currently under heavy development and should be considered alpha quality.
 
 License 
 =======
