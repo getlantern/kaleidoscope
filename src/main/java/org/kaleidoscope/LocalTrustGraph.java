@@ -65,7 +65,7 @@ public class LocalTrustGraph {
     public static class LocalTrustGraphNode extends TrustGraphNode {
         final LocalTrustGraph graph;
         final TrustGraphNodeId id;
-        final List<LocalAdvertisement> messages;
+        final List<BasicTrustGraphAdvertisement> messages;
 
         /**
          * construct a new LocalTrustGraphNode
@@ -77,7 +77,7 @@ public class LocalTrustGraph {
                                    final LocalTrustGraph graph) {
             this.graph = graph;
             this.id = id;
-            this.messages = new LinkedList<LocalAdvertisement>();
+            this.messages = new LinkedList<BasicTrustGraphAdvertisement>();
         }
 
         /**
@@ -111,8 +111,8 @@ public class LocalTrustGraph {
         public void sendAdvertisement(final TrustGraphAdvertisement message,
                                       final TrustGraphNodeId neighbor,
                                       final int ttl) {
-            final LocalAdvertisement localMessage =
-                (LocalAdvertisement) message; 
+            final BasicTrustGraphAdvertisement localMessage =
+                (BasicTrustGraphAdvertisement) message;
             graph.sendAdvertisement(localMessage, this.id,
                                     neighbor, ttl);
         }
@@ -120,7 +120,7 @@ public class LocalTrustGraph {
         @Override
         public void handleAdvertisement(TrustGraphAdvertisement message) {
             super.handleAdvertisement(message);
-            this.messages.add((LocalAdvertisement)message);
+            this.messages.add((BasicTrustGraphAdvertisement)message);
         }
 
         public int getMessageCount() {return messages.size();}
@@ -138,36 +138,6 @@ public class LocalTrustGraph {
         public LocalTrustGraph getTrustGraph() {return graph;}
     }
 
-    /**
-     * An implementation of TrustGraphAdvertisement that holds
-     * an arbitrary String as its payload.
-     */
-    public static class LocalAdvertisement implements TrustGraphAdvertisement {
-        protected final TrustGraphNodeId from;
-        protected final String payload;
-        protected final int ttl;
-
-        public LocalAdvertisement(final TrustGraphNodeId from,
-                                  final String payload, final int ttl) {
-            this.from = from;
-            this.payload = payload;
-            this.ttl = ttl;
-        }
-
-        @Override
-        public int getInboundTTL() {return ttl;}
-        
-        @Override
-        public TrustGraphNodeId getSender() {return from;}
-
-        public String getPayload() { return payload; }
-
-        public LocalAdvertisement copyWith(TrustGraphNodeId sender, int ttl) {
-            return new LocalAdvertisement(sender, getPayload(), ttl);
-        }
-
-    }
-
     /** 
      * send a local advertisement to the node specified with 
      * the given ttl.
@@ -176,11 +146,11 @@ public class LocalTrustGraph {
      * @param sender the node sending the message
      * @param toNeighbor the recipient of the message
      */
-    public void sendAdvertisement(final LocalAdvertisement message,
+    public void sendAdvertisement(final BasicTrustGraphAdvertisement message,
                                   final TrustGraphNodeId sender,
                                   final TrustGraphNodeId toNeighbor,
                                   final int ttl) {
-        final LocalAdvertisement outboundMessage = message.copyWith(sender, ttl);
+        final BasicTrustGraphAdvertisement outboundMessage = message.copyWith(sender, ttl);
         final TrustGraphNode toNode = nodes.get(toNeighbor);
         toNode.handleAdvertisement(outboundMessage);
     }

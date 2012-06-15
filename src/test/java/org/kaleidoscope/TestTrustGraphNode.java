@@ -90,8 +90,8 @@ public class TestTrustGraphNode {
             
             // send an advertisement through the graph from the root
             final TrustGraphAdvertisement ad =
-                new LocalTrustGraph.LocalAdvertisement(root.getId(),
-                                                       "Root", 0);
+                new BasicTrustGraphAdvertisement(root.getId(),
+                                                 "Root", 0);
             root.advertiseSelf(ad);
 
             /* count the number of nodes message has been delivered to.

@@ -56,8 +56,12 @@ public abstract class TrustGraphNode {
      *
      * The implementation should deliver the payload of the message 
      * specified to the neighbor specified and mark the message as 
-     * having the ttl given. 
+     * having the ttl given.
      * 
+     * @param mesage the message to deliver
+     * @param neighbor the id of the neighbor to send the message to 
+     * @param ttl the new ttl for the message
+     *
      */
     public abstract void sendAdvertisement(TrustGraphAdvertisement message, 
                                            TrustGraphNodeId neighbor,
