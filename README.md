@@ -1,4 +1,4 @@
-
+===========================================
 Kaleidoscope Limited Advertisement Protocol
 ===========================================
 
@@ -17,12 +17,12 @@ is included in this package for completeness, but should not be considered
 authoritative.
 
 Status
-------
+======
 
 This library is currently under heavy development and should be considered alpha quality.
 
 Install
--------
+=======
 
 This library is currently only available as a git repository, but you can install it thusly:
     
@@ -30,11 +30,9 @@ This library is currently only available as a git repository, but you can instal
     cd kaleidoscope
     mvn install
     
+    
 Library Quickstart
-------------------
-
-Overview
-~~~~~~~~
+==================
 
 The library is organized from the viewpoint of a particular node in the
 network and the actions it must take to participate. A given node has 
@@ -68,7 +66,7 @@ trust network, a few pieces must be implemented:
 
 
 Sending and Receiving Messages 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 To deliver messages, a concrete subclass of TrustGraphNode that implements "sendAdvertisement" must be implemented.  This method's job is to deliver a 
 message from the node to some neighbor, for example a chat message, a packet over a socket or some other specific message delivery mechanism.  A simple "BasicTrustGraphAdvertisement" class that holds a String payload is provided for ease, but a tailored subclass of TrustGraphAdvertisement for the network may be easier to use depending on the circumstances.
@@ -76,7 +74,7 @@ message from the node to some neighbor, for example a chat message, a packet ove
 A node is also responsible for receiving messages from the network and transforming them into some subclass of TrustGraphAdvertisement.  At a minimum, these messages should be passed to to the "handleAdvertisement" method of the TrustGraphNode for forwarding and other processing.  It is expected that the messages will be locally meaningful in some way that is not specified by the library.
 
 Adding Trusted Neighbors
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 To function correctly, the adjacent nodes in the trust graph ("buddies", "friends", etc)
 must be provided to the library. These "neighbors" are represented by some subclass of "TrustGraphNodeId".  Likely, the BasicTrustGraphNodeId, which holds a String, will suffice.
@@ -90,7 +88,7 @@ Use the addNeighbor(s) function of the RandomRoutingTable to specify the trusted
 etc.
 
 Saving and Loading
-~~~~~~~~~~~~~~~~~~
+------------------
 
 In order to function properly, routing information must be persistent across runs
 of the software.  The routing information should be saved at program exit and loaded
@@ -103,7 +101,7 @@ provided in "JsonFileRoutingPersistence".
 
 
 Basic Kaleidoscope Network Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 The basic implementation uses a set of default kaleidoscope parameters.
 These are embodied by the following methods on TrustGraphNode: 
@@ -117,7 +115,7 @@ circumstance. Please see the source paper for further explanation of these param
 
 
 License
--------
+=======
 
 This library is licensed under an MIT style license. 
 Complete license details can be found in the included LICENSE document.
