@@ -51,7 +51,7 @@ is send via "advertiseSelf".  If a message is received from a peer, it should be
 passed to "handleMessage" for forwarding or any other local processing necessary.
 
 Library Utilization
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 This library implements the network neutral portions of the kaleidoscope
 advertisement protocol.  To implement the protocol on a specific 
