@@ -3,7 +3,6 @@ package org.kaleidoscope;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -12,7 +11,7 @@ import java.util.Set;
  * in the Kaleidoscope protocol to send messages to a targeted number of peers
  * "over" links in the underlying trust network.
  * 
- * The next hop for a message travelling over the trust graph is determined by
+ * The next hop for a message traveling over the trust graph is determined by
  * the entry in the routing table for the neighbor that the message was
  * received from.  Note this neighbor is not necessarily the originator of the
  * message, just the prior hop.
@@ -24,7 +23,7 @@ import java.util.Set;
  * mechanism to ensure the repeatability of routes across runs of the software.
  * In general, the protocol relies on a high degree of stability in the routes
  * in order to function correctly (particularly with respect to "sybil"
- * resistence)
+ * resistance)
  *
  */
 public interface RandomRoutingTable {
@@ -33,7 +32,7 @@ public interface RandomRoutingTable {
      * Determine the next hop for a message.
      * 
      * Messages are routed based on the neighbor from whom the 
-     * message arrives (but not necessiarly originated)
+     * message arrives (but not necessarily originated)
      * 
      * @param message the message to determine the next hop for
      * @return the next TrustGraphNodeId to send the message to
@@ -67,7 +66,7 @@ public interface RandomRoutingTable {
     
     /**
      * Add a group of TrustGraphNieghbors to the routing table.  
-     * Existing neighbors will not be readded. 
+     * Existing neighbors will not be re-added. 
      *
      * @param neighbors the collection of TrustGraphNeighbors to add
      */
@@ -117,7 +116,7 @@ public interface RandomRoutingTable {
      * a random order. This ordering is constructed randomly, but 
      * should rarely change thereafter.  It is intended to be used
      * for the selection of a repeatable random subset of neighboring 
-     * nodes for self advertisement.  It is expected to be maintatined
+     * nodes for self advertisement. It is expected to be maintained
      * across restarts and is also represented in the snapshot method.
      *
      * @return a snapshot of the set of TrustGraphNeighbors in the routing
@@ -139,7 +138,7 @@ public interface RandomRoutingTable {
      * Creates a snapshot of the current state of the routing table.
      * 
      * A mapping X->Y between two TrustGraphNeighbors represents that 
-     * the next hop of a message received from the neigbor X is Y.
+     * the next hop of a message received from the neighbor X is Y.
      * Properties of this mapping may vary between implementations.
      * 
      * @return a snapshot of the current state of the routing table 

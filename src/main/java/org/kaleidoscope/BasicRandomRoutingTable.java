@@ -97,7 +97,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
 
     /** 
      * Construct a BasicRandomRoutingTable with the specified snapshot of the 
-     * routing table state and the default source of randomess.
+     * routing table state and the default source of randomness.
      *
      * @param snapshot a snapshot of the routing table state.  If not valid,
      *        IllegalArgumentException is raised.
@@ -110,7 +110,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
 
     /** 
      * Construct a BasicRandomRoutingTable with the specified snapshot of the 
-     * routing table state and the given source of randoness.
+     * routing table state and the given source of randomness.
      *
      * @param snapshot a snapshot of the routing table state.  
      * @param rng source of randomness used for shuffling and random route
@@ -173,7 +173,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * Add a single TrustGraphNodeId to the routing table.
      * 
      * A random existing route X->Y is split into two routes, 
-     * X -> neighbor, neighbor -> Y to accomodate the new neighbor.
+     * X -> neighbor, neighbor -> Y to accommodate the new neighbor.
      * If there are no existing routes, the neighbor is mapped
      * to itself.
      * 

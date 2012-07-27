@@ -1,14 +1,13 @@
 package org.kaleidoscope; 
 
+import static org.junit.Assert.assertTrue;
+import static org.kaleidoscope.Helpers.createNeighbors;
+import static org.kaleidoscope.Helpers.snapshotsAreEquivalent;
+
 import java.io.File;
 import java.util.Collection;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Test;
-
-import static org.kaleidoscope.Helpers.*;
 
 /**
  * 
@@ -37,7 +36,7 @@ public class TestRoutingPersistence {
         // load a snapshot from the storage mechanism
         RandomRoutingTable.Snapshot snapshot2 = r.load();
         
-        // it should be legitimage to pass to the constructor of the 
+        // it should be legitimate to pass to the constructor of the 
         // routing table that created it... (this will throw exceptions 
         // if invalid)
         new BasicRandomRoutingTable(snapshot2);

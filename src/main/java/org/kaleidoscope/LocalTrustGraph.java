@@ -318,7 +318,7 @@ public class LocalTrustGraph {
      */
     public int getMinRouteLength() { return defaultMinRouteLength; }
     
-    /*
+    /**
      * Create a random graph following the procedure of 
      * Toivonen et al, "A model for social networks"
      * using the default source of randomness
