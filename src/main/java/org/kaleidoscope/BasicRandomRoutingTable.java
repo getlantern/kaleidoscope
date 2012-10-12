@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * random routes outlined in section 4.2 of of TR2008-918
  *
  * Each neighbor is paired with a different neighbor except when there is
- * exactly one neighbor. Routes are not symmetric.  The random ordering 
+ * exactly one neighbor. Routes are not symmetric. The random ordering 
  * of neighbors is built incrementally and may change with the addition 
  * of new neighbors.
  *
@@ -31,22 +31,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * the mappings in the table, but no direct persistence mechanism is provided.
  *
  * To preserve the repeatability of random routes, the table must be
- * persistent across runs of the software.  This property is an important
- * part of limiting the ability of an adversary to  gain additional knowledge
+ * persistent across runs of the software. This property is an important
+ * part of limiting the ability of an adversary to gain additional knowledge
  * by creating "sybil nodes." Subclasses or external observers are expected
  * to provide appropriate persistence.
  *
  * In this implementation, priority is given to ensuring correct, consistent
- * non-blocking reads to threads performing routing lookups.  Changes to the
+ * non-blocking reads to threads performing routing lookups. Changes to the
  * table are expected to be very infrequent compared to reads and not
- * particularly contentious.  Overall table size is expected to be very
+ * particularly contentious. Overall table size is expected to be very
  * small / negligible. 
  * 
  * A more complex implementation maybe appropriate if these expectations are
  * violated.
  *
  * A node may temporarily be pointed to by multiple routes during an in progress
- * operation but never becomes unreachable nor is unmapped during any modificaiton
+ * operation but never becomes unreachable nor is unmapped during any modification
  * operation. Snapshot methods always produce results that represent some 
  * valid state that existed between modification operations and never contain 
  * multiple routings for the same neighbor.
@@ -55,23 +55,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 class BasicRandomRoutingTable implements RandomRoutingTable {
 
-    /* routingTable contains a mapping between TrustGraphNeighbors.  Each entry
-     * in the map (Key,Val) represents that the next hop for a message recieved
+    /** routingTable contains a mapping between TrustGraphNeighbors.  Each entry
+     * in the map (Key,Val) represents that the next hop for a message received
      * from the neighbor Key is the neighbor Val.
      */
     private final ConcurrentMap<TrustGraphNodeId, TrustGraphNodeId> routingTable;
     
-    /* this list represents a random ordering of the neighbors in the table 
+    /** this list represents a random ordering of the neighbors in the table 
      * used to repeatably pick a random subset of neighbors to advertise to.
      * 
-     * Note, it is not a threadsafe list.  Operations accessing this list 
-     * are synchronized externally and no iterators are exposed.  It is intended
+     * Note, it is not a threadsafe list. Operations accessing this list 
+     * are synchronized externally and no iterators are exposed. It is intended
      * for synchronized / snapshot operations only. 
      */
-    private final LinkedList<TrustGraphNodeId> orderedNeighbors;
+    private final List<TrustGraphNodeId> orderedNeighbors;
     
 
-    /* this Random source is used to shuffle and pick random routes when
+    /** this Random source is used to shuffle and pick random routes when
      * modifying the routing table. 
      */
     private final Random rng;
@@ -124,12 +124,12 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
             validateSnapshot(snapshot);
             this.routingTable =
                 new ConcurrentHashMap<TrustGraphNodeId,TrustGraphNodeId>(snapshot.getRoutes());
-            this.orderedNeighbors = new LinkedList<TrustGraphNodeId>(snapshot.getOrderedNeighbors());
+            this.orderedNeighbors = new ArrayList<TrustGraphNodeId>(snapshot.getOrderedNeighbors());
         }
         else {
             this.routingTable =
                 new ConcurrentHashMap<TrustGraphNodeId,TrustGraphNodeId>();
-            this.orderedNeighbors = new LinkedList<TrustGraphNodeId>();
+            this.orderedNeighbors = new ArrayList<TrustGraphNodeId>();
         }
         this.rng = rng;
     }
@@ -199,7 +199,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
 
             /* If there is nothing in the table, route the neighbor to itself.
              * this condition is fixed during the next single addition since
-             * the route is always selected to be split.  The bulk add
+             * the route is always selected to be split. The bulk add
              * operation also takes special care to perform a single addition
              * if this state exists before adding additional routes.
              */
@@ -293,7 +293,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
                 split = randomRoute();
             }
 
-            /* Create a random permuation of the list.
+            /* Create a random permutation of the list.
              * Add in new neighbors from this permutation, routing
              * i->i+1. These routes do not disturb any existing
              * routes and create no self references.
@@ -517,13 +517,15 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * Internal helper method. 
      *
      * Implements the policy for removing multiple neighbors from the random  
-     * orering.  By default, this removes all the neighbors specified and 
+     * ordering.  By default, this removes all the neighbors specified and 
      * leaves the list otherwise in the same ordering.
      *
      * This method assumes that any necessary locking is performed externally. 
      */
-    protected void removeNeighborsFromOrdering(Collection<TrustGraphNodeId> neighbors) {
-        Set<TrustGraphNodeId> killSet = new HashSet(neighbors);
+    protected void removeNeighborsFromOrdering(
+        final Collection<TrustGraphNodeId> neighbors) {
+        final Set<TrustGraphNodeId> killSet = 
+            new HashSet<TrustGraphNodeId>(neighbors);
         ListIterator<TrustGraphNodeId> i = orderedNeighbors.listIterator();
         while (i.hasNext()) {
             if (killSet.contains(i.next())) {
@@ -558,14 +560,16 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
             this.routes = new HashMap<TrustGraphNodeId, TrustGraphNodeId>(routes);
             this.neighbors = new ArrayList<TrustGraphNodeId>(neighbors);
         }
+        @Override
         public Map<TrustGraphNodeId,TrustGraphNodeId> getRoutes() {return routes;}
+        @Override
         public List<TrustGraphNodeId> getOrderedNeighbors() {return neighbors;}
     }
 
     /**
      * Creates a snapshot of the current state of the routing table. 
      * A mapping X->Y between two TrustGraphNeighbors represents that 
-     * the next hop of a message received from the neigbor X is Y. 
+     * the next hop of a message received from the neighbor X is Y. 
      * 
      * This snapshot will contain each neighbor exactly once as a key
      * and once as a value.
@@ -656,7 +660,8 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
          */
         final Map<TrustGraphNodeId,TrustGraphNodeId> routes = snapshot.getRoutes();
         final Set<TrustGraphNodeId> keys = routes.keySet();
-        final Set<TrustGraphNodeId> values = new HashSet(routes.values());
+        final Set<TrustGraphNodeId> values = 
+            new HashSet<TrustGraphNodeId>(routes.values());
         if (!(keys.size() == values.size()) ||
             !(keys.containsAll(values) && values.containsAll(keys))) {
             throw new IllegalArgumentException("Snapshot keys and values are not the same set.");

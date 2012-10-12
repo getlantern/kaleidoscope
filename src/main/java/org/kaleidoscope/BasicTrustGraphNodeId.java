@@ -14,6 +14,7 @@ public class BasicTrustGraphNodeId implements TrustGraphNodeId {
         this.neighborId = neighborId;
     }
 
+    @Override
     public String getNeighborId() {return neighborId;}
 
     @Override

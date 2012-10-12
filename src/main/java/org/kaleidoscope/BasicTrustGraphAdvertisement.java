@@ -7,13 +7,12 @@ package org.kaleidoscope;
  */
 public class BasicTrustGraphAdvertisement implements TrustGraphAdvertisement {
     
-    protected final TrustGraphNodeId from;
-    protected final String payload;
-    protected final int ttl;
+    private final TrustGraphNodeId from;
+    private final String payload;
+    private final int ttl;
 
     public BasicTrustGraphAdvertisement(final TrustGraphNodeId from,
-                              final String payload,
-                              final int ttl) {
+        final String payload, final int ttl) {
         this.from = from;
         this.payload = payload;
         this.ttl = ttl;
@@ -25,9 +24,11 @@ public class BasicTrustGraphAdvertisement implements TrustGraphAdvertisement {
     @Override
     public TrustGraphNodeId getSender() {return from;}
 
+    @Override
     public String getPayload() { return payload; }
 
-    public BasicTrustGraphAdvertisement copyWith(TrustGraphNodeId sender, int ttl) {
+    public BasicTrustGraphAdvertisement copyWith(final TrustGraphNodeId sender, 
+        final int ttl) {
         return new BasicTrustGraphAdvertisement(sender, getPayload(), ttl);
     }
 

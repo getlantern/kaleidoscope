@@ -4,7 +4,7 @@ package org.kaleidoscope;
  * 
  * The TrustGraphAdvertisement interface represents messages
  * that are send "over" the trust graph via random repeatable 
- * routes according to the Kaleidoscope protocol (eg relay availabilty 
+ * routes according to the Kaleidoscope protocol (eg relay availability 
  * advertisements)
  * 
  * TrustGraphAdvertisements are pushed out to neighbors on the 
@@ -16,7 +16,7 @@ package org.kaleidoscope;
  * the message should traverse before being dropped.
  *
  * The payload of the message is expected to be implementation
- * dependant. This interface only serves to represent the parts
+ * dependent. This interface only serves to represent the parts
  * directly used to abstractly route messages.
  *
  */
@@ -39,5 +39,12 @@ public interface TrustGraphAdvertisement {
      *         travel before being dropped.
      */
     public int getInboundTTL();
+
+    /**
+     * Accessor for the payload of the advertisement.
+     * 
+     * @return The payload of the advertisement.
+     */
+    String getPayload();
 
 }
