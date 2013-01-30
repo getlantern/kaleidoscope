@@ -16,6 +16,9 @@ technical details, motivation and threat model of the protocol.  Information
 is included in this package for completeness, but should not be considered
 authoritative.
 
+A video of Jinyang Li presenting Kaleidoscope is available at
+http://punkcast.com/1725/index.html.
+
 Status
 ======
 
