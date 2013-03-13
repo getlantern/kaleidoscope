@@ -53,7 +53,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @see RandomRoutingTable
  */
-class BasicRandomRoutingTable implements RandomRoutingTable {
+public class BasicRandomRoutingTable implements RandomRoutingTable {
 
     /** routingTable contains a mapping between TrustGraphNeighbors.  Each entry
      * in the map (Key,Val) represents that the next hop for a message received
