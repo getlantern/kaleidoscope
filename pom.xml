@@ -22,7 +22,7 @@
   <scm>
     <url>https://github.com/getlantern/kaleidoscope</url>
     <connection>scm:git://github.com/getlantern/kaleidoscope.git</connection>
-    <developerConnection>scm:git@github.com:getlantern/kaleidoscope.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com:getlantern/kaleidoscope.git</developerConnection>
   </scm>
 
   <parent>
