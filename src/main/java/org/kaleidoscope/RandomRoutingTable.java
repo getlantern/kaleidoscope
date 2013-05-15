@@ -6,14 +6,14 @@ import java.util.Map;
 
 /**
  *
- * The RandomRoutingTable interface represents the randomized  per-node routing
+ * The RandomRoutingTable interface represents the randomized per-node routing
  * table used to construct the "repeatable random walks" (random routes) used 
  * in the Kaleidoscope protocol to send messages to a targeted number of peers
  * "over" links in the underlying trust network.
  * 
  * The next hop for a message traveling over the trust graph is determined by
  * the entry in the routing table for the neighbor that the message was
- * received from.  Note this neighbor is not necessarily the originator of the
+ * received from. Note this neighbor is not necessarily the originator of the
  * message, just the prior hop.
  *
  * A randomly ordered list of neighbors is also maintained for repeatably 
@@ -43,7 +43,7 @@ public interface RandomRoutingTable {
 
     /**
      * Determine the next TrustGraphNodeId in a route containing
-     * a given neighbor as the prior node.  The next hop 
+     * a given neighbor as the prior node. The next hop 
      * is the TrustGraphNodeId paired with the given neighbor in
      * the table.
      * 
@@ -114,7 +114,7 @@ public interface RandomRoutingTable {
     /**
      * Retrieve a list of TrustGraphNeighbors in the routing table in 
      * a random order. This ordering is constructed randomly, but 
-     * should rarely change thereafter.  It is intended to be used
+     * should rarely change thereafter. It is intended to be used
      * for the selection of a repeatable random subset of neighboring 
      * nodes for self advertisement. It is expected to be maintained
      * across restarts and is also represented in the snapshot method.

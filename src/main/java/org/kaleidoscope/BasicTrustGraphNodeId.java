@@ -18,23 +18,33 @@ public class BasicTrustGraphNodeId implements TrustGraphNodeId {
     public String getNeighborId() {return neighborId;}
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof BasicTrustGraphNodeId) {
-            BasicTrustGraphNodeId other = (BasicTrustGraphNodeId) obj;
-            return neighborId.equals(other.getNeighborId());
-        }
-        else {
-            return false;
-        }
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((neighborId == null) ? 0 : neighborId.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return neighborId.hashCode();
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BasicTrustGraphNodeId other = (BasicTrustGraphNodeId) obj;
+        if (neighborId == null) {
+            if (other.neighborId != null)
+                return false;
+        } else if (!neighborId.equals(other.neighborId))
+            return false;
+        return true;
     }
 
     @Override
     public String toString() {
-        return neighborId;
+        return "BasicTrustGraphNodeId [neighborId=" + neighborId + "]";
     }
 }

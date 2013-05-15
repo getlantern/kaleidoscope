@@ -1,5 +1,6 @@
 package org.kaleidoscope;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,7 +54,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @see RandomRoutingTable
  */
-class BasicRandomRoutingTable implements RandomRoutingTable {
+public class BasicRandomRoutingTable implements RandomRoutingTable {
 
     /** routingTable contains a mapping between TrustGraphNeighbors.  Each entry
      * in the map (Key,Val) represents that the next hop for a message received
@@ -81,7 +82,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * randomness.
      */
     public BasicRandomRoutingTable() {
-        this(new Random());
+        this(new SecureRandom());
     }
 
     /**
@@ -91,7 +92,7 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * @param rng source of randomness used for shuffling and random 
      *            route insertions.
      */
-    public BasicRandomRoutingTable(Random rng) {
+    public BasicRandomRoutingTable(final SecureRandom rng) {
         this(null, rng);
     }
 
@@ -99,13 +100,13 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * Construct a BasicRandomRoutingTable with the specified snapshot of the 
      * routing table state and the default source of randomness.
      *
-     * @param snapshot a snapshot of the routing table state.  If not valid,
+     * @param snapshot a snapshot of the routing table state. If not valid,
      *        IllegalArgumentException is raised.
      * @throws IllegalArgumentException if snapshot is not valid
      * 
      */
-    public BasicRandomRoutingTable(RandomRoutingTable.Snapshot snapshot) {
-        this(snapshot, new Random());
+    public BasicRandomRoutingTable(final RandomRoutingTable.Snapshot snapshot) {
+        this(snapshot, new SecureRandom());
     }
 
     /** 
@@ -118,13 +119,15 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
      * @throws IllegalArgumentException if snapshot is not valid
      *
      */
-    public BasicRandomRoutingTable(RandomRoutingTable.Snapshot snapshot, Random rng) {
+    private BasicRandomRoutingTable(final RandomRoutingTable.Snapshot snapshot, 
+        final SecureRandom rng) {
         if (snapshot != null) {
             // only construct from valid snapshots (throws IllegalArgumentException if invalid)
             validateSnapshot(snapshot);
             this.routingTable =
                 new ConcurrentHashMap<TrustGraphNodeId,TrustGraphNodeId>(snapshot.getRoutes());
-            this.orderedNeighbors = new ArrayList<TrustGraphNodeId>(snapshot.getOrderedNeighbors());
+            this.orderedNeighbors = 
+                new ArrayList<TrustGraphNodeId>(snapshot.getOrderedNeighbors());
         }
         else {
             this.routingTable =
@@ -720,5 +723,11 @@ class BasicRandomRoutingTable implements RandomRoutingTable {
                 throw new IllegalArgumentException("Routed neighbors and ordered neighbors do not match.");
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BasicRandomRoutingTable [routingTable=" + routingTable
+                + ", orderedNeighbors=" + orderedNeighbors + "]";
     }
 }

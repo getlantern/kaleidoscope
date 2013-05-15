@@ -125,10 +125,10 @@ public abstract class TrustGraphNode {
 
     /**
      * called to perform limited advertisement of this node's  
-     * information (represented by message).  The advertisement
+     * information (represented by message). The advertisement
      * will try to target the number of nodes specified in 
      * getIdealReach() by sending the message down some number 
-     * of random routes with.  The inboundTTL and sender of the 
+     * of random routes. The inboundTTL and sender of the 
      * message are ignored. 
      *
      * @param message the TrustGraphAdvertisement to send 
