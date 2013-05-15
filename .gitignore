@@ -1,1 +1,14 @@
-target
+.DS_Store
+*.swp
+*.un~
+*.*~
+*.settings
+*.classpath
+*.project
+.idea
+nbactions.xml
+.sass-cache
+log.txt*
+target/
+logs
+tags
