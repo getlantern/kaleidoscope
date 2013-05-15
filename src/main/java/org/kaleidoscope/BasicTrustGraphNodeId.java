@@ -45,6 +45,6 @@ public class BasicTrustGraphNodeId implements TrustGraphNodeId {
 
     @Override
     public String toString() {
-        return "BasicTrustGraphNodeId [neighborId=" + neighborId + "]";
+        return neighborId;
     }
 }

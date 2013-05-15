@@ -40,7 +40,14 @@ public class Helpers {
             return false;
         }
         for (Map.Entry<TrustGraphNodeId,TrustGraphNodeId> e : routesA.entrySet()) {
-            if (!routesB.get(e.getKey()).equals(e.getValue())) {
+            final TrustGraphNodeId key = e.getKey();
+            final TrustGraphNodeId value = e.getValue();
+            final TrustGraphNodeId route = routesB.get(key);
+            if (route == null) {
+                System.err.println("route "+key+" not in: "+ routesB);
+                //return false;
+            }
+            if (!route.equals(value)) {
                 return false;
             }
         }
