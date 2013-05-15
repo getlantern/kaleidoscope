@@ -14,6 +14,17 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/getlantern/kaleidoscope/issues</url>
+  </issueManagement>
+
+  <scm>
+    <url>https://github.com/getlantern/kaleidoscope</url>
+    <connection>scm:git://github.com/getlantern/kaleidoscope.git</connection>
+    <developerConnection>scm:git@github.com:getlantern/kaleidoscope.git</developerConnection>
+  </scm>
+
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
